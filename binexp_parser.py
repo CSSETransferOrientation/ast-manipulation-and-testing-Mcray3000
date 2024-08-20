@@ -1,3 +1,13 @@
+"""
+Make an AST that simplifies base itientities
+x + 0 = x
+x * 1 = x
+x * 0 = 0
+(a + b + c + .... +) * 0 = 0
+
+Impliment regression testing using file testing
+"""
+
 #!/usr/bin/python3
 import os
 from os.path import join as osjoin
