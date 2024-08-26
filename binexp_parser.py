@@ -22,15 +22,11 @@ NodeType = Enum('BinOpNodeType', ['number', 'operator'])
 
 class TestBinaryOperatorSimplifier(unittest.TestCase):
     def test_additive_identity(self):
-        # Test cases for additive identity reduction
         ast = BinOpAst(['+', '1', '+', '2', '0']) 
         ast.simplify_binops()
         self.assertEqual(ast.infix_str(), '(1 + 2)') 
 
-        # Add more test cases here
-
     def test_multiplicative_identity(self):
-        # Test cases for multiplicative identity reduction
         ast = BinOpAst(['+', '1', '*', '2', '1'])
         ast.simplify_binops()
         self.assertEqual(ast.infix_str(), '(1 + 2)') 
