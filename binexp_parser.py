@@ -20,6 +20,21 @@ from enum import Enum
 # distinguish between the addition and multiplication operators
 NodeType = Enum('BinOpNodeType', ['number', 'operator'])
 
+class TestBinaryOperatorSimplifier(unittest.TestCase):
+    def test_additive_identity(self):
+        # Test cases for additive identity reduction
+        ast = BinOpAst(['+', '1', '+', '2', '0']) 
+        ast.simplify_binops()
+        self.assertEqual(ast.infix_str(), '(1 + 2)') 
+
+        # Add more test cases here
+
+    def test_multiplicative_identity(self):
+        # Test cases for multiplicative identity reduction
+        ast = BinOpAst(['+', '1', '*', '2', '1'])
+        ast.simplify_binops()
+        self.assertEqual(ast.infix_str(), '(1 + 2)') 
+
 class BinOpAst():
     """
     A somewhat quick and dirty structure to represent a binary operator AST.
@@ -92,17 +107,39 @@ class BinOpAst():
         """
         Reduce additive identities
         x + 0 = x
+        input of + 1 + 2 0 would reduce to + 1 2
         """
-        # IMPLEMENT ME!
-        pass
+        if self.type == NodeType.operator and self.val == '+': 
+            if self.right.val == '0':
+                self.val = self.left.val
+                self.type = self.left.type
+            elif self.left.val == '0':
+                self.val = self.right.val
+                self.type = self.right.type
+        
+        if self.left:
+            self.left.additive_identity()
+        if self.right:
+            self.right.additive_identity()
+                
                         
     def multiplicative_identity(self):
         """
         Reduce multiplicative identities
         x * 1 = x
         """
-        # IMPLEMENT ME!
-        pass
+        if self.type == NodeType.operator and self.val == '*': 
+            if self.right.val == '1':
+                self.val = self.left.val
+                self.type = self.left.type
+            elif self.left.val == '1':
+                self.val = self.right.val
+                self.type = self.right.type
+        
+        if self.left:
+            self.left.multiplicative_identity()
+        if self.right:
+            self.right.multiplicative_identity()
     
     
     def mult_by_zero(self):
