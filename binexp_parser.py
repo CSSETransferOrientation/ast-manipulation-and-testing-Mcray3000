@@ -21,15 +21,36 @@ from enum import Enum
 NodeType = Enum('BinOpNodeType', ['number', 'operator'])
 
 class TestBinaryOperatorSimplifier(unittest.TestCase):
+    
     def test_additive_identity(self):
-        ast = BinOpAst(['+', '1', '+', '2', '0']) 
-        ast.simplify_binops()
-        self.assertEqual(ast.infix_str(), '(1 + 2)') 
+        
+        ins = osjoin("testbench", "arith_id", "inputs")
+        outs = osjoin("testbench", "arith_id", "outputs")
+        
+        for fname in os.listdir(ins):
+            with open(osjoin(ins, fname)) as f:
+                inp = f.read().strip()
+            with open(osjoin(outs, fname)) as f:
+                expected = f.read().strip()
+                with self.subTest(msg=f"Testing {fname}", inp=inp, expected=expected):
+                    ast = BinOpAst(inp.split())
+                    ast.simplify_binops()
+                    self.assertEqual(ast.prefix_str(), expected)
 
     def test_multiplicative_identity(self):
-        ast = BinOpAst(['+', '1', '*', '2', '1'])
-        ast.simplify_binops()
-        self.assertEqual(ast.infix_str(), '(1 + 2)') 
+        
+        ins = osjoin("testbench", "mult_id", "inputs")
+        outs = osjoin("testbench", "mult_id", "outputs")
+        
+        for fname in os.listdir(ins):
+            with open(osjoin(ins, fname)) as f:
+                inp = f.read().strip()
+            with open(osjoin(outs, fname)) as f:
+                expected = f.read().strip()
+                with self.subTest(msg=f"Testing {fname}", inp=inp, expected=expected):
+                    ast = BinOpAst(inp.split())
+                    ast.simplify_binops()
+                    self.assertEqual(ast.prefix_str(), expected)
 
 class BinOpAst():
     """
