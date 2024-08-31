@@ -20,6 +20,7 @@ from enum import Enum
 # distinguish between the addition and multiplication operators
 NodeType = Enum('BinOpNodeType', ['number', 'operator'])
 
+
 class TestBinaryOperatorSimplifier(unittest.TestCase):
     
     def test_additive_identity(self):
@@ -126,13 +127,21 @@ class BinOpAst():
         x + 0 = x
         input of + 1 + 2 0 would reduce to + 1 2
         """
+        
         if self.type == NodeType.operator and self.val == '+': 
             if self.right.val == '0':
                 self.val = self.left.val
                 self.type = self.left.type
+                self.right = self.left.right
+                self.left = self.left.left
+                self.additive_identity()
             elif self.left.val == '0':
                 self.val = self.right.val
                 self.type = self.right.type
+                self.left = self.right.left
+                self.right = self.right.right
+                self.additive_identity()
+
         
         if self.left:
             self.left.additive_identity()
@@ -149,9 +158,15 @@ class BinOpAst():
             if self.right.val == '1':
                 self.val = self.left.val
                 self.type = self.left.type
+                self.right = self.left.right
+                self.left = self.left.left
+                self.multiplicative_identity()
             elif self.left.val == '1':
                 self.val = self.right.val
                 self.type = self.right.type
+                self.left = self.right.left
+                self.right = self.right.right
+                self.multiplicative_identity()
         
         if self.left:
             self.left.multiplicative_identity()
