@@ -3,6 +3,7 @@
    sub tasks work.
 
       I have sucesfully completed the additive identity and mult identity! It was very fun theyve pased the tests I gave it.
+      
 2. Briefly discuss one thing you learned by completing this assignment that
    you believe will be valuable to you in your future courses / programming experiences.
 
@@ -10,5 +11,5 @@
 
 3. Briefly discuss either one aspect of this assignment you did not enjoy or
    one particular difficult bug you encountered.
-   
+
       I had some issues visualizing how to do my recursion but once I got ahold of a white board I felt a lot better. The big issue I had was my tree would change and id just keep going down the tree but sometimes I had to recheck the same node if I replaced it with another + 0.
