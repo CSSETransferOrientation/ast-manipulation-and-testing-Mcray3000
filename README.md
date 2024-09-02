@@ -13,3 +13,6 @@
    one particular difficult bug you encountered.
 
       I had some issues visualizing how to do my recursion but once I got ahold of a white board I felt a lot better. The big issue I had was my tree would change and id just keep going down the tree but sometimes I had to recheck the same node if I replaced it with another + 0.
+
+
+;;> Issues with recursion order and tests are a litle sparse, but overall well done! 

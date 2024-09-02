@@ -35,6 +35,7 @@ class TestBinaryOperatorSimplifier(unittest.TestCase):
                 expected = f.read().strip()
                 with self.subTest(msg=f"Testing {fname}", inp=inp, expected=expected):
                     ast = BinOpAst(inp.split())
+                    # ;;> This should only call the additive_identity function so that you are testing just one thing at a time
                     ast.simplify_binops()
                     self.assertEqual(ast.prefix_str(), expected)
 
@@ -127,7 +128,8 @@ class BinOpAst():
         x + 0 = x
         input of + 1 + 2 0 would reduce to + 1 2
         """
-        
+        #;;> Ah, the weirdness you are seeing is because you want to do the recursive calls first
+        #;;> to "pull" the values up.
         if self.type == NodeType.operator and self.val == '+': 
             if self.right.val == '0':
                 self.val = self.left.val
